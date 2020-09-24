@@ -1,6 +1,6 @@
-# suratgrocerymartweb
+# Surat Grocery Mart Web
 
-A new Flutter project.
+An admin Application for Surat Grocery Mart
 
 ## Early Look
 
