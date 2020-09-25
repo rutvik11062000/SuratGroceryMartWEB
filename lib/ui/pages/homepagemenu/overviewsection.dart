@@ -21,7 +21,8 @@ Column overviewSection() {
             RaisedButton(
               color: Colors.white,
               onPressed: () {},
-              child: navigationMenu(Icons.calendar_today, "Last 30 days"),
+              child:
+                  navigationMenu(Icons.calendar_today, "Last 30 days", false),
             )
           ],
         ),

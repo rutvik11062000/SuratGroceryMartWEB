@@ -59,6 +59,16 @@ BoxDecoration earningSummaryBDL = BoxDecoration(
   color: Colors.white,
 );
 
+BoxDecoration selectedNavMenuDB = BoxDecoration(
+  // borderRadius: BorderRadius.circular(30.0),
+  borderRadius: BorderRadius.all(
+    Radius.circular(8.0),
+  ),
+  color: Colors.blue[50],
+);
+
+BoxDecoration unSelectedNavMenuDB = BoxDecoration();
+
 TextStyle subtitle = TextStyle(
   fontSize: 10,
   fontWeight: FontWeight.w600,
