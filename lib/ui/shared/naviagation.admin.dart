@@ -1,7 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:suratgrocerymartweb/models/mainModel.dart';
+import 'package:suratgrocerymartweb/models/navigationModel.dart';
 import 'package:suratgrocerymartweb/ui/helper/spacing.dart';
 import 'package:suratgrocerymartweb/ui/shared/naivgationmenu.dart';
+import 'package:provider/provider.dart';
 
 class NavigationAdmin extends StatefulWidget {
   const NavigationAdmin({Key key}) : super(key: key);
@@ -11,10 +14,37 @@ class NavigationAdmin extends StatefulWidget {
 }
 
 class _NavigationAdminState extends State<NavigationAdmin> {
-  List _isHovering = [false, false, false, false, false];
-  List _isSelected = [true, false, false, false];
   @override
   Widget build(BuildContext context) {
+    List _isHovering = [false, false, false, false, false];
+    // final _isSelected = context.select((navModel) => navModel.)
+    final navModel = context.watch<NavModel>();
+    List<NavMenuClass> nav = [
+      NavMenuClass(iconData: Icons.home, title: "Home"),
+      NavMenuClass(iconData: Icons.shopping_bag, title: "Orders"),
+      NavMenuClass(iconData: Icons.people, title: "Customers"),
+      NavMenuClass(
+          iconData: CupertinoIcons.money_dollar_circle, title: "Products"),
+      NavMenuClass(
+          iconData: Icons.stacked_line_chart_outlined, title: "Analytics")
+    ];
+    final currIdx =
+        context.select<MainModel, int>((mainModel) => mainModel.index);
+    final model = context.watch<MainModel>();
+    InkWell buildNavMen(int index) {
+      return InkWell(
+        onTap: () {
+          model.updateIndex(index);
+          navModel.select(index);
+        },
+        onHover: (value) {
+          navModel.update(index, value);
+        },
+        child: navigationMenu(nav[index].iconData, nav[index].title,
+            navModel.getHover(index) || navModel.getSelected(index)),
+      );
+    }
+
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: Column(
@@ -58,65 +88,22 @@ class _NavigationAdminState extends State<NavigationAdmin> {
             ),
           ),
           space40,
-          InkWell(
-            onTap: () {
-              // setState(() {
-              //   _isHovering[0] = !_isHovering[0];
-              // });
-            },
-            onHover: (value) {
-              setState(() {
-                _isHovering[0] = value;
-              });
-            },
-            child: navigationMenu(Icons.home, "Home", _isHovering[0]),
+          Expanded(
+            child: ListView.builder(
+              itemCount: nav.length,
+              itemBuilder: (BuildContext context, int index) {
+                return buildNavMen(index);
+              },
+            ),
           ),
-          space10,
-          InkWell(
-            onTap: () {},
-            onHover: (value) {
-              setState(() {
-                _isHovering[1] = value;
-              });
-            },
-            child: navigationMenu(Icons.shopping_bag, "Orders", _isHovering[1]),
-          ),
-          space10,
-          InkWell(
-            onTap: () {},
-            onHover: (value) {
-              setState(() {
-                _isHovering[2] = value;
-              });
-              // print("hovered");
-            },
-            child: navigationMenu(Icons.people, "Customers", _isHovering[2]),
-          ),
-          space10,
-          InkWell(
-            onTap: () {},
-            onHover: (value) {
-              setState(() {
-                _isHovering[3] = value;
-              });
-            },
-            child: navigationMenu(
-                CupertinoIcons.money_dollar_circle, "Products", _isHovering[3]),
-          ),
-          space10,
-          InkWell(
-            onTap: () {},
-            onHover: (value) {
-              setState(() {
-                _isHovering[4] = value;
-              });
-            },
-            child: navigationMenu(
-                Icons.stacked_line_chart_outlined, "Analytics", _isHovering[4]),
-          ),
-          space10,
         ],
       ),
     );
   }
+}
+
+class NavMenuClass {
+  IconData iconData;
+  String title;
+  NavMenuClass({this.iconData, this.title});
 }

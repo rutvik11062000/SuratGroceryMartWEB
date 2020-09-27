@@ -1,6 +1,15 @@
+import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:suratgrocerymartweb/models/mainModel.dart';
+import 'package:suratgrocerymartweb/models/navigationModel.dart';
 
 import 'package:suratgrocerymartweb/ui/helper/styles.dart';
+import 'package:suratgrocerymartweb/ui/pages/Analytics/analyticsPage.dart';
+import 'package:suratgrocerymartweb/ui/pages/Customers/customersPage.dart';
+import 'package:suratgrocerymartweb/ui/pages/Orders/ordersPage.dart';
+import 'package:suratgrocerymartweb/ui/pages/Products/productsPage.dart';
+import 'package:suratgrocerymartweb/ui/pages/homepagemenu/CurrentBalanceSection/currentBalanceSection.dart';
 import 'package:suratgrocerymartweb/ui/pages/homepagemenu/homepage.dart';
 import 'package:suratgrocerymartweb/ui/shared/naviagation.admin.dart';
 
@@ -12,17 +21,24 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-        textTheme: Theme.of(context).textTheme.apply(
-              fontFamily: 'Open Sans',
-            ),
+    return MultiProvider(
+      // create: (_) => MainModel(),
+      providers: [
+        ChangeNotifierProvider<MainModel>(create: (_) => MainModel()),
+        ChangeNotifierProvider<NavModel>(create: (_) => NavModel()),
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+          textTheme: Theme.of(context).textTheme.apply(
+                fontFamily: 'Open Sans',
+              ),
+        ),
+        home: HomePage(),
       ),
-      home: HomePage(),
     );
   }
 }
@@ -32,6 +48,8 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final currIdx =
+        context.select<MainModel, int>((mainModel) => mainModel.index);
     return Scaffold(
       // drawer: Drawer(),
 
@@ -49,11 +67,44 @@ class HomePage extends StatelessWidget {
               width: 35.0,
             ),
             Expanded(
-              child: HomeNavMenu(),
+              child: PageTransitionSwitcher(
+                // reverse: model.reverse,
+                duration: Duration(milliseconds: 300),
+                transitionBuilder: (Widget child,
+                    Animation<double> primaryAnimation,
+                    Animation<double> secondaryAnimation) {
+                  return SharedAxisTransition(
+                    child: child,
+                    animation: primaryAnimation,
+                    secondaryAnimation: secondaryAnimation,
+                    transitionType: SharedAxisTransitionType.horizontal,
+                  );
+                },
+                child: getPageView(currIdx),
+                // child: getWidget(currIdx),
+              ),
             ),
           ],
         ),
       ),
     );
+  }
+
+  Widget getPageView(int currentIndex) {
+    switch (currentIndex) {
+      case 0:
+        return HomeNavMenu();
+        break;
+      case 1:
+        return OrdersPage();
+      case 2:
+        return CustomersPage();
+      case 3:
+        return ProductsPage();
+      case 4:
+        return AnalyticsPage();
+      default:
+        return HomeNavMenu();
+    }
   }
 }

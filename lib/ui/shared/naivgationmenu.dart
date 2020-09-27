@@ -15,7 +15,7 @@ Padding navigationMenu(IconData iconData, String title, bool isHovering) {
             padding: const EdgeInsets.only(left: 15.0),
             child: Icon(
               iconData,
-              size: 20.0,
+              size: isHovering ? 25.0 : 20.0,
               color: isHovering ? Colors.blue[900] : Colors.blueGrey,
             ),
           ),
@@ -24,7 +24,7 @@ Padding navigationMenu(IconData iconData, String title, bool isHovering) {
             child: Text(
               title,
               style: TextStyle(
-                  fontWeight: FontWeight.w800,
+                  fontWeight: isHovering ? FontWeight.w800 : FontWeight.w600,
                   fontSize: 12.0,
                   color: isHovering ? Colors.blue[900] : Colors.blueGrey),
             ),
