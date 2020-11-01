@@ -67,11 +67,11 @@ class HomePage extends StatelessWidget {
           children: [
             Container(
               decoration: toplrbd,
-              width: width < 1000 ? width * 0.08 : width * 0.2,
+              width: width < 1150 ? width * 0.08 : width * 0.2,
               // width: width * .08,
 
               // child: NavigationAdmin(),
-              child: width < 1000 ? NavRail() : NavigationAdmin(),
+              child: width < 1150 ? NavRail() : NavigationAdmin(),
             ),
             SizedBox(
               width: 35.0,
