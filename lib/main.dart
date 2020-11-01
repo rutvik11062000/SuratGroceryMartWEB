@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:suratgrocerymartweb/models/mainModel.dart';
 import 'package:suratgrocerymartweb/models/navigationModel.dart';
+import 'package:suratgrocerymartweb/services/firebaseSerices.dart';
 
 import 'package:suratgrocerymartweb/ui/helper/styles.dart';
 import 'package:suratgrocerymartweb/ui/pages/Analytics/analyticsPage.dart';
@@ -27,6 +28,7 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider<MainModel>(create: (_) => MainModel()),
         ChangeNotifierProvider<NavModel>(create: (_) => NavModel()),
+        ChangeNotifierProvider<DBModel>(create: (_) => DBModel()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -49,12 +51,15 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final dbmodel = context.watch<DBModel>();
     final width = MediaQuery.of(context).size.width;
     final currIdx =
         context.select<MainModel, int>((mainModel) => mainModel.index);
     return Scaffold(
-      // drawer: Drawer(),
-
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => dbmodel.setDemoData(),
+      ),
+      drawer: Drawer(),
       body: Padding(
         padding: const EdgeInsets.only(top: 15.0, left: 15.0, right: 15.0),
         child: Row(
