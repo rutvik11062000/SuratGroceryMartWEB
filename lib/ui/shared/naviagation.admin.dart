@@ -19,15 +19,8 @@ class _NavigationAdminState extends State<NavigationAdmin> {
     List _isHovering = [false, false, false, false, false];
     // final _isSelected = context.select((navModel) => navModel.)
     final navModel = context.watch<NavModel>();
-    List<NavMenuClass> nav = [
-      NavMenuClass(iconData: Icons.home, title: "Home"),
-      NavMenuClass(iconData: Icons.shopping_bag, title: "Orders"),
-      NavMenuClass(iconData: Icons.people, title: "Customers"),
-      NavMenuClass(
-          iconData: CupertinoIcons.money_dollar_circle, title: "Products"),
-      NavMenuClass(
-          iconData: Icons.stacked_line_chart_outlined, title: "Analytics")
-    ];
+    final nav = navModel.getNav();
+
     final currIdx =
         context.select<MainModel, int>((mainModel) => mainModel.index);
     final model = context.watch<MainModel>();

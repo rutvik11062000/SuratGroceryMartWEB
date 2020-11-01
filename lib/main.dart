@@ -11,6 +11,7 @@ import 'package:suratgrocerymartweb/ui/pages/Orders/ordersPage.dart';
 import 'package:suratgrocerymartweb/ui/pages/Products/productsPage.dart';
 import 'package:suratgrocerymartweb/ui/pages/homepagemenu/CurrentBalanceSection/currentBalanceSection.dart';
 import 'package:suratgrocerymartweb/ui/pages/homepagemenu/homepage.dart';
+import 'package:suratgrocerymartweb/ui/shared/navRail.dart';
 import 'package:suratgrocerymartweb/ui/shared/naviagation.admin.dart';
 
 void main() {
@@ -48,6 +49,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
     final currIdx =
         context.select<MainModel, int>((mainModel) => mainModel.index);
     return Scaffold(
@@ -60,8 +62,11 @@ class HomePage extends StatelessWidget {
           children: [
             Container(
               decoration: toplrbd,
-              width: MediaQuery.of(context).size.width * 0.20,
-              child: NavigationAdmin(),
+              width: width < 1000 ? width * 0.08 : width * 0.2,
+              // width: width * .08,
+
+              // child: NavigationAdmin(),
+              child: width < 1000 ? NavRail() : NavigationAdmin(),
             ),
             SizedBox(
               width: 35.0,
