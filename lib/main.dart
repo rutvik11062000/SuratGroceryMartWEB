@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:suratgrocerymartweb/models/mainModel.dart';
 import 'package:suratgrocerymartweb/models/navigationModel.dart';
+import 'package:suratgrocerymartweb/models/productModel.dart';
 import 'package:suratgrocerymartweb/services/firebaseSerices.dart';
 
 import 'package:suratgrocerymartweb/ui/helper/styles.dart';
@@ -29,6 +30,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<MainModel>(create: (_) => MainModel()),
         ChangeNotifierProvider<NavModel>(create: (_) => NavModel()),
         ChangeNotifierProvider<DBModel>(create: (_) => DBModel()),
+        ChangeNotifierProvider<ProductMdoel>(create: (_) => ProductMdoel()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -56,9 +58,6 @@ class HomePage extends StatelessWidget {
     final currIdx =
         context.select<MainModel, int>((mainModel) => mainModel.index);
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => dbmodel.setDemoData(),
-      ),
       drawer: Drawer(),
       body: Padding(
         padding: const EdgeInsets.only(top: 15.0, left: 15.0, right: 15.0),
@@ -90,7 +89,10 @@ class HomePage extends StatelessWidget {
                     transitionType: SharedAxisTransitionType.horizontal,
                   );
                 },
-                child: getPageView(currIdx),
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 8.0),
+                  child: getPageView(currIdx),
+                ),
                 // child: getWidget(currIdx),
               ),
             ),

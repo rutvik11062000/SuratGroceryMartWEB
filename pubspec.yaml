@@ -28,6 +28,8 @@ dependencies:
   cloud_firestore: ^0.14.2
   cupertino_icons: ^1.0.0
   firebase_core: ^0.5.1
+  firebase_storage: ^5.0.1
+  flutter_web_image_picker: ^0.0.2
   horizontal_data_table: ^1.0.6+2
   provider: ^4.3.2+2
 

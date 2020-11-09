@@ -47,7 +47,7 @@ class _NavigationAdminState extends State<NavigationAdmin> {
             height: 45.0,
             // color: Colors.red,
             child: Text(
-              "GROCERY SHOP",
+              "Grocery Mart",
               style: TextStyle(
                 fontWeight: FontWeight.w900,
                 color: Colors.blue,

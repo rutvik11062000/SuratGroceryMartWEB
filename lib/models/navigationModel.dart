@@ -4,7 +4,7 @@ import 'package:suratgrocerymartweb/ui/shared/naviagation.admin.dart';
 
 class NavModel extends ChangeNotifier {
   List _isHovering = [false, false, false, false, false];
-  List _isSelected = [true, false, false, false, false];
+  List _isSelected = [false, false, false, true, false];
 
   List<NavMenuClass> _nav = [
     NavMenuClass(iconData: Icons.home, title: "Home"),
