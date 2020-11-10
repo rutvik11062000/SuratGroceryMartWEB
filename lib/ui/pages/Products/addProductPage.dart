@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_web_image_picker/flutter_web_image_picker.dart';
 import 'package:suratgrocerymartweb/models/Porduct%20Model/AddModelProvider.dart';
@@ -116,6 +118,7 @@ class _AddProductState extends State<AddProduct> {
                   padding: const EdgeInsets.symmetric(vertical: 16.0),
                   child: ElevatedButton(
                     onPressed: () {
+                      print("Send");
                       // print(pnme);
                       // print(name.text);
                       // print(price.text);
@@ -123,8 +126,11 @@ class _AddProductState extends State<AddProduct> {
                       model.updateProduct(nameController.text,
                           int.parse(priceController.text), descController.text);
 
-                      Scaffold.of(context)
-                          .showSnackBar(SnackBar(content: Text("rutvik")));
+                      dbModel.uploadNewProduct(model.map);
+                      Scaffold.of(context).showSnackBar(SnackBar(
+                        content: Text("Product Added Successfully!🚀"),
+                        backgroundColor: Colors.blue,
+                      ));
                       print(descController.text);
                       print(nameController.text);
 
@@ -151,6 +157,8 @@ class ProductImageHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final model = context.watch<AddModelProvider>();
+    final dbModel = context.watch<DBModel>();
+
     return Container(
       // color: Colors.white,
       decoration: BoxDecoration(

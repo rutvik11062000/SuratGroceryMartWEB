@@ -8,6 +8,16 @@ import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 class DBModel extends ChangeNotifier {
   // final inititalise = Firebase.initializeApp();
   final DemoRef = FirebaseFirestore.instance.collection('Demo');
+  final productCollection = FirebaseFirestore.instance.collection('Products');
+
+  void uploadNewProduct(Map<String, dynamic> map) {
+    // print(map);
+    print("hii");
+    final ref = productCollection.doc();
+    map['productID'] = ref.id;
+    ref.set(map);
+    // productCollection.doc(category).(map);
+  }
 
   Future<void> uploadFile(String filePath) async {
     File file = File(filePath);
